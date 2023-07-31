@@ -28,7 +28,7 @@ You can see a live demo of the Scrolling Text Web App by visiting the following 
 
 The app uses the following libraries, which are included via CDNs:
 
-- [jQuery](<https://ajax.googleapis.com/ajax/libs/jquery/) (v3.5.1): For simplify DOM manipulation.
+- [jQuery](https://jquery.com/) (v3.5.1): For simplify DOM manipulation.
 - [Bootstrap](https://getbootstrap.com/) (v4.5.2): For styling and layout.
 - [Font Awesome](https://fontawesome.com/) (v6.0.0-beta3): For icons used in the play, pause, and stop buttons.
 
