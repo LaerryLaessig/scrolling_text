@@ -45,4 +45,4 @@ This project is licensed under the [MIT License](LICENSE). You are free to use, 
 
 ---
 
-Thank you for using the Scrolling Text Web App! If you have any questions or need assistance, please don't hesitate to contact us. Happy scrolling! 😊
+Thank you for using the Scrolling Text Web App!
