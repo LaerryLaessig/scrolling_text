@@ -7,20 +7,35 @@
     <title>Scrolling Text</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+            }
+
+            .row {
+                flex-direction: column;
+            }
+
+            .col-md-6 {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <div class="container mt-4">
         <h1 class="text-center mb-4">Scrolling Text</h1>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col">
                 <textarea id="textInput" rows="19" class="form-control"
                     placeholder="Enter the text to scroll here..."></textarea>
                 <br>
                 <label for="speedSlider">Speed:</label>
                 <input type="range" min="1" max="20" value="10" id="speedSlider" class="form-control-range">
                 <br>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-center">
                     <button id="playButton" class="btn btn-primary">
                         <i class="fas fa-play"></i> Play
                     </button>
@@ -32,7 +47,7 @@
                     </button>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col">
                 <canvas id="textCanvas" width="600" height="600" style="border: 1px solid black;"></canvas>
             </div>
         </div>
@@ -83,7 +98,8 @@
             cancelAnimationFrame(animationId);
             isPaused = false;
             draw();
-            playButton.disabled = true;
+            playButton.disabled = true
+
             pauseButton.disabled = false;
             stopButton.disabled = false;
         });
