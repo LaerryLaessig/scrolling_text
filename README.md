@@ -22,7 +22,7 @@ To use the Scrolling Text Web App, follow these steps:
 
 ## Demo
 
-You can see a live demo of the Scrolling Text Web App by visiting the following link: [Live Demo](TODO)
+You can see a live demo of the Scrolling Text Web App by visiting the following link: [Live Demo](https://laerrylaessig.github.io/scrolling_text/)
 
 ## Dependencies
 
