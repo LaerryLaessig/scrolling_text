@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrolling Text</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Scrolling Text</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <textarea id="textInput" rows="19" class="form-control"
+                    placeholder="Enter the text to scroll here..."></textarea>
+                <br>
+                <label for="speedSlider">Speed:</label>
+                <input type="range" min="1" max="20" value="10" id="speedSlider" class="form-control-range">
+                <br>
+                <div class="d-flex justify-content-between">
+                    <button id="playButton" class="btn btn-primary">
+                        <i class="fas fa-play"></i> Play
+                    </button>
+                    <button id="stopButton" class="btn btn-danger" disabled>
+                        <i class="fas fa-stop"></i> Stop
+                    </button>
+                    <button id="pauseButton" class="btn btn-warning" disabled>
+                        <i class="fas fa-pause"></i> Pause
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <canvas id="textCanvas" width="600" height="600" style="border: 1px solid black;"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        const canvas = document.getElementById('textCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let textLines = [];
+        let positionY = canvas.height;
+        let speed = 1.0;
+        let animationId;
+        let isPaused = false;
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = '20px Arial';
+            ctx.fillStyle = 'black';
+            ctx.textAlign = 'left';
+
+            for (let i = 0; i < textLines.length; i++) {
+                ctx.fillText(textLines[i], 10, positionY + i * 30);
+            }
+
+            if (!isPaused) {
+                positionY -= speed;
+            }
+
+            if (positionY < -30 * textLines.length) {
+                positionY = canvas.height;
+            }
+
+            animationId = requestAnimationFrame(draw);
+        }
+
+        const speedSlider = document.getElementById('speedSlider');
+        speedSlider.addEventListener('input', () => {
+            speed = parseFloat(speedSlider.value) / 20 * 1.9 + 0.1;
+        });
+
+        const playButton = document.getElementById('playButton');
+        playButton.addEventListener('click', () => {
+            textLines = document.getElementById('textInput').value.split('\n');
+            positionY = canvas.height;
+            cancelAnimationFrame(animationId);
+            isPaused = false;
+            draw();
+            playButton.disabled = true;
+            pauseButton.disabled = false;
+            stopButton.disabled = false;
+        });
+
+        const pauseButton = document.getElementById('pauseButton');
+        pauseButton.addEventListener('click', () => {
+            isPaused = !isPaused;
+            pauseButton.innerHTML = isPaused ? '<i class="fas fa-play"></i> Resume' : '<i class="fas fa-pause"></i> Pause';
+        });
+
+        const stopButton = document.getElementById('stopButton');
+        stopButton.addEventListener('click', () => {
+            cancelAnimationFrame(animationId);
+            isPaused = false;
+            playButton.disabled = false;
+            pauseButton.disabled = true;
+            stopButton.disabled = true;
+        });
+    </script>
+</body>
+
+</html>
