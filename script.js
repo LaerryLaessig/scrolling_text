@@ -94,6 +94,7 @@ function set_dark_mode() {
 }
 
 function set_light_mode() {
+
     document.body.classList.remove("dark-mode");
     document.getElementById("textInput").classList.remove("dark-mode");
     document.getElementById("textCanvas").classList.remove("dark-mode");
