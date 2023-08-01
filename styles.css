@@ -1,3 +1,6 @@
+body {
+    font-family: sans-serif;
+}
 @media (max-width: 768px) {
     .container {
         width: 100%;
@@ -11,3 +14,37 @@
         width: 100%;
     }
 }
+
+body.dark-mode {
+    background-color: black;
+    color: white;
+  }
+  
+  a.dark-mode {
+    color: white;
+  }
+  
+  a.dark-mode:hover {
+    color: lightgray;
+  }
+
+  textarea.dark-mode {
+    background-color: darkgray;
+    border: 1px solid lightgray;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-family: sans-serif;
+  }
+  
+  textarea.dark-mode:focus {
+    background-color: lightgray;
+  }
+
+  canvas.dark-mode {
+    border: 1px solid white;
+  }
+
+  canvas {
+    border: 1px solid black;
+  }
+
