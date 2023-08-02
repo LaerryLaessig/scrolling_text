@@ -13,17 +13,14 @@ let isPaused = false;
 let color = 'black';
 var mode = localStorage.getItem("mode");
 
-$(document).ready(function() {
-    $('#editButton').click(function() {
-        const textContent = $('#textInput').val(modalInputText);
-        $('#editTextarea').val(textContent);
+$(document).ready(function () {
+    $('#editButton').click(function () {
+        $('#editTextarea').val(modalInputText);
         $('#editModal').modal('show');
     });
 
-    $('#saveChangesButton').click(function() {
-        const editedContent = $('#editTextarea').val();
-        $('#textInput').val(editedContent);
-        modalInputText = editedContent;
+    $('#saveChangesButton').click(function () {
+        modalInputText = $('#editTextarea').val();;
         $('#editModal').modal('hide');
     });
 });
@@ -31,12 +28,12 @@ $(document).ready(function() {
 
 if (mode === "dark") {
     set_dark_mode();
-  } else {
+} else {
     set_light_mode();
-  }
+}
 
 
-  
+
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -45,7 +42,7 @@ function draw() {
     ctx.textAlign = 'left';
 
     for (let i = 0; i < textLines.length; i++) {
-        ctx.fillText(textLines[i], 10, positionY + i * 30);
+        ctx.fillText(textLines[i], 10, positionY / 2 + i * 30);
     }
 
     if (!isPaused) {
@@ -79,7 +76,7 @@ playButton.addEventListener('click', () => {
     clearButton.disabled = true;
     pauseButton.disabled = false;
     stopButton.disabled = false;
-    
+
 });
 
 clearButton.addEventListener('click', () => {
@@ -101,7 +98,7 @@ stopButton.addEventListener('click', () => {
     clearButton.disabled = false;
     pauseButton.disabled = true;
     stopButton.disabled = true;
-    
+
 });
 
 const darkModeButton = document.getElementById("darkModeButton");
