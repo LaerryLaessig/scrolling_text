@@ -1,7 +1,11 @@
 const canvas = document.getElementById('textCanvas');
+const devicePixelRatio = window.devicePixelRatio || 1;
+canvas.width = 600 * devicePixelRatio;
+canvas.height = 800 * devicePixelRatio;
 const ctx = canvas.getContext('2d');
-
+ctx.scale(devicePixelRatio, devicePixelRatio);
 let textLines = [];
+let modalInputText = '';
 let positionY = canvas.height;
 let speed = 1.0;
 let animationId;
@@ -9,11 +13,26 @@ let isPaused = false;
 let color = 'black';
 var mode = localStorage.getItem("mode");
 
+$(document).ready(function () {
+    $('#editButton').click(function () {
+        $('#editTextarea').val(modalInputText);
+        $('#editModal').modal('show');
+    });
+
+    $('#saveChangesButton').click(function () {
+        modalInputText = $('#editTextarea').val();;
+        $('#editModal').modal('hide');
+    });
+});
+
+
 if (mode === "dark") {
     set_dark_mode();
-  } else {
+} else {
     set_light_mode();
-  }
+}
+
+
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -23,7 +42,7 @@ function draw() {
     ctx.textAlign = 'left';
 
     for (let i = 0; i < textLines.length; i++) {
-        ctx.fillText(textLines[i], 10, positionY + i * 30);
+        ctx.fillText(textLines[i], 10, positionY / 2 + i * 30);
     }
 
     if (!isPaused) {
@@ -48,7 +67,7 @@ const pauseButton = document.getElementById('pauseButton');
 const stopButton = document.getElementById('stopButton');
 
 playButton.addEventListener('click', () => {
-    textLines = document.getElementById('textInput').value.split('\n');
+    textLines = modalInputText.split('\n');
     positionY = canvas.height;
     cancelAnimationFrame(animationId);
     isPaused = false;
@@ -57,11 +76,11 @@ playButton.addEventListener('click', () => {
     clearButton.disabled = true;
     pauseButton.disabled = false;
     stopButton.disabled = false;
-    
+
 });
 
 clearButton.addEventListener('click', () => {
-    textLines = document.getElementById('textInput').value = '';
+    modalInputText = '';
 });
 
 
@@ -79,7 +98,7 @@ stopButton.addEventListener('click', () => {
     clearButton.disabled = false;
     pauseButton.disabled = true;
     stopButton.disabled = true;
-    
+
 });
 
 const darkModeButton = document.getElementById("darkModeButton");
@@ -87,7 +106,6 @@ const lightModeButton = document.getElementById("lightModeButton");
 
 function set_dark_mode() {
     document.body.classList.add("dark-mode");
-    document.getElementById("textInput").classList.add("dark-mode");
     document.getElementById("textCanvas").classList.add("dark-mode");
     color = 'white';
     localStorage.setItem("mode", "dark");
@@ -96,7 +114,6 @@ function set_dark_mode() {
 function set_light_mode() {
 
     document.body.classList.remove("dark-mode");
-    document.getElementById("textInput").classList.remove("dark-mode");
     document.getElementById("textCanvas").classList.remove("dark-mode");
     color = 'black';
     localStorage.setItem("mode", "light");
