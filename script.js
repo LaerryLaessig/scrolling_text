@@ -1,7 +1,11 @@
 const canvas = document.getElementById('textCanvas');
+const devicePixelRatio = window.devicePixelRatio || 1;
+canvas.width = 600 * devicePixelRatio;
+canvas.height = 800 * devicePixelRatio;
 const ctx = canvas.getContext('2d');
-
+ctx.scale(devicePixelRatio, devicePixelRatio);
 let textLines = [];
+let modalInputText = '';
 let positionY = canvas.height;
 let speed = 1.0;
 let animationId;
@@ -9,12 +13,30 @@ let isPaused = false;
 let color = 'black';
 var mode = localStorage.getItem("mode");
 
+$(document).ready(function() {
+    $('#editButton').click(function() {
+        const textContent = $('#textInput').val(modalInputText);
+        $('#editTextarea').val(textContent);
+        $('#editModal').modal('show');
+    });
+
+    $('#saveChangesButton').click(function() {
+        const editedContent = $('#editTextarea').val();
+        $('#textInput').val(editedContent);
+        modalInputText = editedContent;
+        $('#editModal').modal('hide');
+    });
+});
+
+
 if (mode === "dark") {
     set_dark_mode();
   } else {
     set_light_mode();
   }
 
+
+  
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -48,7 +70,7 @@ const pauseButton = document.getElementById('pauseButton');
 const stopButton = document.getElementById('stopButton');
 
 playButton.addEventListener('click', () => {
-    textLines = document.getElementById('textInput').value.split('\n');
+    textLines = modalInputText.split('\n');
     positionY = canvas.height;
     cancelAnimationFrame(animationId);
     isPaused = false;
@@ -61,7 +83,7 @@ playButton.addEventListener('click', () => {
 });
 
 clearButton.addEventListener('click', () => {
-    textLines = document.getElementById('textInput').value = '';
+    modalInputText = '';
 });
 
 
@@ -87,7 +109,6 @@ const lightModeButton = document.getElementById("lightModeButton");
 
 function set_dark_mode() {
     document.body.classList.add("dark-mode");
-    document.getElementById("textInput").classList.add("dark-mode");
     document.getElementById("textCanvas").classList.add("dark-mode");
     color = 'white';
     localStorage.setItem("mode", "dark");
@@ -96,7 +117,6 @@ function set_dark_mode() {
 function set_light_mode() {
 
     document.body.classList.remove("dark-mode");
-    document.getElementById("textInput").classList.remove("dark-mode");
     document.getElementById("textCanvas").classList.remove("dark-mode");
     color = 'black';
     localStorage.setItem("mode", "light");

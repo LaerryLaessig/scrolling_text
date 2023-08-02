@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <div class="d-flex justify-content-end">
+    <div class="">
         <button id="darkModeButton" class="btn btn-dark">
             <i class="fas fa-moon"></i> Dark Mode
         </button>
@@ -26,36 +26,62 @@
     
     <div class="container mt-4">
         <h1 class="text-center mb-4">Scrolling Text</h1>
+        
         <div class="row">
-            <div class="col">
-                <textarea id="textInput" rows="19" class="form-control"
-                    placeholder="Enter the text to scroll here..."></textarea>
-                <br>
-                <div id="slider_ele">
-                    <label for="speedSlider">Speed:</label>
-                    <input type="range" min="1" max="20" value="10" id="speedSlider" class="form-control-range">
-                    <br>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <button id="playButton" class="btn btn-primary">
+            <div class="col-4">
+                <div id="list-group" class="d-flex justify-content-center list-group">
+                    <label>Action:</label>
+                    <button id="editButton" class="list-group-item list-group-item-action">
+                        <i class="fa-solid fa-pen"></i> Edit
+                    </button>
+                    <button id="playButton" class="list-group-item list-group-item-action">
                         <i class="fas fa-play"></i> Play
                     </button>
-                    <button id="clearButton" class="btn btn-outline-danger">
+                    <button id="clearButton" class="list-group-item list-group-item-action">
                         <i class="fa-solid fa-trash-can"></i> Clear
                     </button>
-                    <button id="stopButton" class="btn btn-danger" disabled>
+                    <button id="stopButton" class="list-group-item list-group-item-action" disabled>
                         <i class="fas fa-stop"></i> Stop
                     </button>
-                    <button id="pauseButton" class="btn btn-warning" disabled>
+                    <button id="pauseButton" class="list-group-item list-group-item-action" disabled>
                         <i class="fas fa-pause"></i> Pause
                     </button>
+                    <div id="slider_ele">
+                        <label for="speedSlider">Speed:</label>
+                        <input type="range" min="1" max="20" value="10" id="speedSlider" class="form-control-range">
+                        <label for="fontSizeSlider">Font Size:</label>
+                        <input type="range" min="10" max="60" value="20" step="10" id="fontSizeSlider" class="form-control-range">
+                    </div>
                 </div>
             </div>
-            <div class="col">
-                <canvas id="textCanvas" width="600" height="600"></canvas>
+            <div class="col-8">
+                <div class="canvas-container">
+                    <canvas id="textCanvas"></canvas>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- The Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Text</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea id="editTextarea" rows="10" class="form-control" placeholder="Enter the edited text here..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveChangesButton">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
     <script src="script.js"></script>
 </body>
