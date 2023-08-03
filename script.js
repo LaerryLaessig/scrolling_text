@@ -1,13 +1,14 @@
 const canvas = document.getElementById('textCanvas');
 const devicePixelRatio = window.devicePixelRatio || 1;
 canvas.width = 600 * devicePixelRatio;
-canvas.height = 800 * devicePixelRatio;
+canvas.height = 600 * devicePixelRatio;
 const ctx = canvas.getContext('2d');
 ctx.scale(devicePixelRatio, devicePixelRatio);
 let textLines = [];
 let modalInputText = '';
 let positionY = canvas.height;
 let speed = 1.0;
+let fontSize = 20;
 let animationId;
 let isPaused = false;
 let color = 'black';
@@ -37,19 +38,19 @@ if (mode === "dark") {
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.font = '20px Arial';
+    ctx.font = ''.concat(fontSize, 'px Arial');
     ctx.fillStyle = color;
     ctx.textAlign = 'left';
 
     for (let i = 0; i < textLines.length; i++) {
-        ctx.fillText(textLines[i], 10, positionY / 2 + i * 30);
+        ctx.fillText(textLines[i], 10, positionY + i * (fontSize+5));
     }
 
     if (!isPaused) {
         positionY -= speed;
     }
 
-    if (positionY < -30 * textLines.length) {
+    if (positionY < -(fontSize+5) * textLines.length) {
         positionY = canvas.height;
     }
 
@@ -59,6 +60,11 @@ function draw() {
 const speedSlider = document.getElementById('speedSlider');
 speedSlider.addEventListener('input', () => {
     speed = parseFloat(speedSlider.value) / 20 * 1.9 + 0.1;
+});
+
+const fontSizeSlider = document.getElementById('fontSizeSlider');
+fontSizeSlider.addEventListener('input', () => {
+    fontSize = parseInt(fontSizeSlider.value);
 });
 
 const playButton = document.getElementById('playButton');
